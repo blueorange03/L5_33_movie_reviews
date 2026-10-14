@@ -6,6 +6,8 @@ import secrets
 STREAM_HOST = "127.0.0.1"
 STREAM_PORT = 8000
 movies = {}
+
+
 def add_movie(title, genre, year):
     """Add a movie with empty rating and review lists."""
     movies[title] = {"genre": genre, "year": year,
@@ -16,7 +18,8 @@ def rate_movie(title, stars, review_text=""):
     """Record a 1–5 star rating and an optional review."""
     if title not in movies:
         raise KeyError(f"Unknown movie: {title}")
-    if not isinstance(stars, int) or isinstance(stars, bool) or not 1 <= stars <= 5:
+    is_integer = isinstance(stars, int) and not isinstance(stars, bool)
+    if not is_integer or not 1 <= stars <= 5:
         print(f"Rating must be between 1 and 5, got {stars}")
         return False
     movies[title]["ratings"].append(stars)
